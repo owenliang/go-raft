@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-
 type InstallSnapshotArgs struct {
 	Term              int
 	LeaderId          int
@@ -121,7 +120,6 @@ func (rf *Raft) doInstallSnapshot(peerId int) {
 		}
 	}()
 }
-
 
 // 安装快照RPC Handler
 func (rf *Raft) InstallSnapshot(args *InstallSnapshotArgs, reply *InstallSnapshotReply) (err error) {

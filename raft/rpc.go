@@ -35,7 +35,7 @@ func (rf *Raft) initRpcPeers(addrs []string) {
 	return
 }
 
-func (rf *Raft) initRpcServer()  {
+func (rf *Raft) initRpcServer() {
 	server := rpc.NewServer()
 	server.Register(rf)
 

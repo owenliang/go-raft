@@ -58,7 +58,6 @@ func (rf *Raft) appendEntriesLoop() {
 	}
 }
 
-
 // 已兼容snapshot
 func (rf *Raft) doAppendEntries(peerId int) {
 	args := AppendEntriesArgs{}
@@ -137,7 +136,6 @@ func (rf *Raft) doAppendEntries(peerId int) {
 		}
 	}()
 }
-
 
 // 已兼容snapshot
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) (err error) {
