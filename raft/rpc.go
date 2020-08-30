@@ -5,10 +5,7 @@ import (
 	"net"
 	"net/http"
 	"net/rpc"
-	"sync"
 )
-
-var handleOnce sync.Once
 
 type ClientEnd struct {
 	addr string
@@ -40,9 +37,6 @@ func (rf *Raft) initRpcPeers(addrs []string) {
 
 func (rf *Raft) initRpcServer()  {
 	server := rpc.NewServer()
-	handleOnce.Do(func() {
-		rpc.HandleHTTP()
-	})
 	server.Register(rf)
 
 	var err error
