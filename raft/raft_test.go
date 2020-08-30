@@ -1,6 +1,7 @@
 package raft
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -10,7 +11,17 @@ func TestRaft(t *testing.T) {
 
 	for i := 0; i < len(addrs); i++ {
 		go func(idx int) {
-			Make(addrs, idx, MakePersister(), make(chan ApplyMsg, 1))
+			rf, applyChan, _ := Make(addrs, idx, fmt.Sprintf("./node%d", idx))
+			go func() {
+				for {
+					msg := <-applyChan
+					fmt.Printf("node%d 提交日志: %v\n", idx, msg)
+				}
+			}()
+			for {
+				rf.Start("一条日志")
+				time.Sleep(5 * time.Second)
+			}
 		}(i)
 	}
 

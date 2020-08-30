@@ -105,10 +105,12 @@ func (rf *Raft) Kill() {
 	atomic.StoreInt32(&rf.dead, 1)
 }
 
-func Make(addrs []string, me int, persister *Persister, applyCh chan ApplyMsg) (rf *Raft, err error) {
+func Make(addrs []string, me int, dataDir string) (rf *Raft, applyCh chan ApplyMsg, err error) {
 	rf = &Raft{}
 	rf.me = me
-	rf.persister = persister
+	if rf.persister, err = MakePersister(dataDir); err != nil {
+		return
+	}
 
 	rf.role = ROLE_FOLLOWER
 	rf.leaderId = -1
@@ -116,6 +118,7 @@ func Make(addrs []string, me int, persister *Persister, applyCh chan ApplyMsg) (
 	rf.lastIncludedIndex = 0
 	rf.lastIncludedTerm = 0
 	rf.lastActiveTime = time.Now()
+	applyCh = make(chan ApplyMsg, 1)
 	rf.applyCh = applyCh
 
 	// 读取raft持久化状态

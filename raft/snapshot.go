@@ -35,7 +35,7 @@ func (rf *Raft) installSnapshotToApplication() {
 	// 同步给application层的快照
 	applyMsg = &ApplyMsg{
 		CommandValid:      false,
-		Snapshot:          rf.persister.ReadSnapshot(),
+		Snapshot:          rf.persister.ReadSnapshot(rf.lastIncludedIndex),
 		LastIncludedIndex: rf.lastIncludedIndex,
 		LastIncludedTerm:  rf.lastIncludedTerm,
 	}
@@ -75,7 +75,7 @@ func (rf *Raft) TakeSnapshot(snapshot []byte, lastIncludedIndex int) {
 	rf.log = afterLog
 
 	// 把snapshot和raftstate持久化
-	rf.persister.SaveStateAndSnapshot(rf.raftStateForPersist(), snapshot)
+	rf.persister.SaveStateAndSnapshot(rf.raftStateForPersist(), snapshot, rf.lastIncludedIndex)
 
 	util.DPrintf("RafeNode[%d] TakeSnapshot ends, IsLeader[%v] snapshotLastIndex[%d] lastIncludedIndex[%d] lastIncludedTerm[%d]",
 		rf.me, rf.leaderId == rf.me, lastIncludedIndex, rf.lastIncludedIndex, rf.lastIncludedTerm)
@@ -90,7 +90,7 @@ func (rf *Raft) doInstallSnapshot(peerId int) {
 	args.LastIncludedIndex = rf.lastIncludedIndex
 	args.LastIncludedTerm = rf.lastIncludedTerm
 	args.Offset = 0
-	args.Data = rf.persister.ReadSnapshot()
+	args.Data = rf.persister.ReadSnapshot(rf.lastIncludedIndex)
 	args.Done = true
 
 	reply := InstallSnapshotReply{}
@@ -169,7 +169,7 @@ func (rf *Raft) InstallSnapshot(args *InstallSnapshotArgs, reply *InstallSnapsho
 	rf.lastIncludedIndex = args.LastIncludedIndex
 	rf.lastIncludedTerm = args.LastIncludedTerm
 	// 持久化raft state和snapshot
-	rf.persister.SaveStateAndSnapshot(rf.raftStateForPersist(), args.Data)
+	rf.persister.SaveStateAndSnapshot(rf.raftStateForPersist(), args.Data, rf.lastIncludedIndex)
 	// snapshot提交给应用层
 	rf.installSnapshotToApplication()
 	util.DPrintf("RaftNode[%d] installSnapshot ends, rf.lastIncludedIndex[%d] rf.lastIncludedTerm[%d] args.lastIncludedIndex[%d] args.lastIncludedTerm[%d] logSize[%d]",
