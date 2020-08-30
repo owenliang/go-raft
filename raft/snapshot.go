@@ -113,7 +113,7 @@ func (rf *Raft) doInstallSnapshot(peerId int) {
 				return
 			}
 			rf.nextIndex[peerId] = rf.lastIndex() + 1      // 重新从末尾同步log（未经优化，但够用）
-			rf.matchIndex[peerId] = args.LastIncludedIndex // 已同步到的位置（未经优化，但够用）
+			rf.matchIndex[peerId] = args.LastIncludedIndex // 已同步到的位置，即快照后的log重新apply给application层
 			rf.updateCommitIndex()                         // 更新commitIndex
 			util.DPrintf("RaftNode[%d] doInstallSnapshot ends, leaderId[%d] peerId[%d] nextIndex[%d] matchIndex[%d] commitIndex[%d]\n", rf.me, rf.leaderId, peerId, rf.nextIndex[peerId],
 				rf.matchIndex[peerId], rf.commitIndex)
