@@ -1,7 +1,7 @@
 package raft
 
 import (
-	"raft-kv/util"
+	"github.com/owenliang/go-raft-lib/util"
 	"time"
 )
 

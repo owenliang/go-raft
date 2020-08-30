@@ -1,8 +1,8 @@
 package raft
 
 import (
+	"github.com/owenliang/go-raft-lib/util"
 	"math/rand"
-	"raft-kv/util"
 	"time"
 )
 

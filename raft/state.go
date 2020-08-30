@@ -3,7 +3,7 @@ package raft
 import (
 	"bytes"
 	"encoding/gob"
-	"raft-kv/util"
+	"github.com/owenliang/go-raft-lib/util"
 )
 
 func (rf *Raft) persist() {
