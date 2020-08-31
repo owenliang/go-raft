@@ -8,3 +8,12 @@
 
 * snapshot尺寸不受限于内存。
 * snapshot分块传输。
+
+## 体验
+
+构造了3个node的raft集群，其中node02延迟加入。
+
+```
+cd raft
+go test
+```
