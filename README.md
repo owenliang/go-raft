@@ -10,7 +10,7 @@ Learn more about details and my experience, please take a look at：[mit-6.824](
 
 * Memory-independent snapshot size
 * InstallSnapshot RPC with split chunks.
-* Simple client for talking to leader
+* Simple client for talking to leader.
 
 ## try
 
