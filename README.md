@@ -15,7 +15,7 @@ For more details, please visit the project: [mit-6.824](https://github.com/owenl
 * Optimize the snapshot Chunked transfer
 
 ## Try it!
-Structured 3 raft cluster of node, in which node2 has delay join feature
+Create a scenario where 3 raft cluster of node was structured, in which allows node2 can be added with delay
 
 ```
 cd raft
