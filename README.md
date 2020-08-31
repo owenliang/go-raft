@@ -1,18 +1,16 @@
 # go-raft
 
-可靠的Raft算法实现，脱胎于MIT6.824课程大作业，通过全部正确性测试。
+The reliable Raft algorithm is implemented and passed all the correctness tests of [MIT6.824](https://github.com/owenliang/mit-6.824).
 
-了解更多细节与心得，请跳转这个项目：[mit-6.824](https://github.com/owenliang/mit-6.824)。
+## TODO
 
-## 待优化
+* Memory-independent snapshot size
+* Block transmissin snapshot
+* Native client
 
-* snapshot尺寸不受限于内存。
-* snapshot分块传输。
-* 原生客户端。
+## Quick start
 
-## 体验
-
-构造了3个node的raft集群，其中node02延迟加入。
+Construct a raft cluster of 3 nodes, node-02 delayed joining
 
 ```
 cd raft
