@@ -4,7 +4,7 @@
 
 ## INTRO
 
-The reliable raft algorithm which is inspired by the mit6.824 course, and has passed all the essential tests for accuracy and correctness 
+The reliable raft algorithm which is inspired by the mit6.824 (https://github.com/owenliang/mit-6.824) course, and has passed all the essential tests for accuracy and correctness 
 
 For more details, please visit the project: [mit-6.824](https://github.com/owenliang/mit-6.824).
 
