@@ -1,18 +1,20 @@
 # go-raft
 
-可靠的Raft算法实现，脱胎于MIT6.824课程大作业，通过全部正确性测试。
+[切换中文版本](https://github.com/owenliang/go-raft/blob/master/README-cn.md)
 
-了解更多细节与心得，请跳转这个项目：[mit-6.824](https://github.com/owenliang/mit-6.824)。
+A reliable raft algorithm implementation which is bored from MIT6.824's Lab, all tests are passed.
 
-## 待优化
+Learn more about details and my experience, please take a look at：[mit-6.824](https://github.com/owenliang/mit-6.824).
 
-* snapshot尺寸不受限于内存。
-* snapshot分块传输。
-* 原生客户端。
+## todo
 
-## 体验
+* snapshot size won't be limited by memory.
+* snapshot rpc with splite chunks.
+* easy-to-use client to write log to the leader
 
-构造了3个node的raft集群，其中node02延迟加入。
+## try
+
+I build a raft cluster with 3 nodes, and node2 will join later after node0 and node1 for testing.
 
 ```
 cd raft
