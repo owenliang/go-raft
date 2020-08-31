@@ -5,7 +5,7 @@ The reliable Raft algorithm is implemented and passed all the correctness tests 
 ## TODO
 
 * Memory-independent snapshot size
-* Block transmissin snapshot
+* Transmission snapshot block
 * Native client
 
 ## Quick start
