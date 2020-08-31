@@ -6,6 +6,5 @@
 
 ## 待优化
 
-* 过期snapshot文件清理。
 * snapshot尺寸不受限于内存。
 * snapshot分块传输。
