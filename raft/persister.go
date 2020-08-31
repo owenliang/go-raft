@@ -2,10 +2,13 @@ package raft
 
 import (
 	"fmt"
+	"github.com/owenliang/go-raft-lib/util"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
+	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -78,6 +81,31 @@ func (ps *Persister) RaftStateSize() int {
 func (ps *Persister) syncSnapshotToDisk(lastIncludedIndex int) {
 	filename := path.Join(ps.dir, fmt.Sprintf("rf.snapshot-%d", lastIncludedIndex))
 	ps.mustWriteFile(filename, ps.snapshot)
+
+	// 清理更新index的snapshot文件
+	if fileList, err := ioutil.ReadDir(ps.dir); err != nil {
+		log.Fatal(err)
+	} else {
+		for _, file := range fileList {
+			if file.IsDir() {
+				continue
+			}
+			p := file.Name()
+			ext := path.Ext(p)
+			if !strings.HasPrefix(ext, ".snapshot-") {
+				continue
+			}
+			if index, err := strconv.Atoi(p[len("rf.snapshot-"):]); err != nil {
+				continue
+			} else {
+				if index < lastIncludedIndex {
+					fullpath := path.Join(ps.dir, p)
+					os.Remove(fullpath)
+					util.DPrintf("删除过期snapshot: %v\n", fullpath)
+				}
+			}
+		}
+	}
 }
 
 func (ps *Persister) SaveStateAndSnapshot(state []byte, snapshot []byte, lastIncludedIndex int) {
