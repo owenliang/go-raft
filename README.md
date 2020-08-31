@@ -8,9 +8,9 @@ Learn more about details and my experience, please take a look at：[mit-6.824](
 
 ## todo
 
-* snapshot size won't be limited by memory.
-* snapshot rpc with splite chunks.
-* easy-to-use client to write log to the leader
+* snapshot size are limited by memory currently.
+* snapshot rpc do not support to be sent by split chunks.
+* may need an easy-to-use client to write log to the current leader.
 
 ## try
 
