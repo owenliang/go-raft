@@ -81,8 +81,10 @@ func (ps *Persister) RaftStateSize() int {
 func (ps *Persister) syncSnapshotToDisk(lastIncludedIndex int) {
 	filename := path.Join(ps.dir, fmt.Sprintf("rf.snapshot-%d", lastIncludedIndex))
 	ps.mustWriteFile(filename, ps.snapshot)
+}
 
-	// 清理更新index的snapshot文件
+// 清理更新index的snapshot文件
+func (ps *Persister) cleanOlderSnapshot(lastIncludedIndex int ) {
 	if fileList, err := ioutil.ReadDir(ps.dir); err != nil {
 		log.Fatal(err)
 	} else {
@@ -117,9 +119,10 @@ func (ps *Persister) SaveStateAndSnapshot(state []byte, snapshot []byte, lastInc
 	ps.raftStateMemSynced = true
 	ps.snapshotInMemSynced = true
 
-	// 顺序很重要: 先同步snapshot到磁盘,再更新raft状态（元数据）
+	// 顺序很重要: 先同步snapshot到磁盘,再更新raft状态（元数据），最后清理旧snapshot
 	ps.syncSnapshotToDisk(lastIncludedIndex)
 	ps.syncRaftStateToDisk()
+	ps.cleanOlderSnapshot(lastIncludedIndex)
 }
 
 // 从磁盘加载snapshot
